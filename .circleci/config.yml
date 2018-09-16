@@ -1,9 +1,46 @@
-version: 2
-jobs:
-  build:
-    docker:
-      - image: circleci/ruby:2.4.1
-    steps:
-      - checkout
-      - run: echo "A first hello......"
+es:
+    only:
+      - master
+machine:
+  node:
+    version: 8.2.0
+  services:
+    - redis
+  environment:
+    DEPLOY_DIR: $HOME/surveybot
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/drivers"
+    DBUS_SESSION_BUS_ADDRESS: /dev/null
+
+    AWS_CODE_DEPLOY_APPLICATION_NAME: Surevybot
+    AWS_CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: surveybot-production
+    AWS_CODE_DEPLOY_REGION: us-west-2
+    AWS_CODE_DEPLOY_APP_SOURCE: $HOME/surveybot
+    AWS_CODE_DEPLOY_S3_KEY_PREFIX: apps/
+    AWS_CODE_DEPLOY_S3_FILENAME: "${CIRCLE_BUILD_NUM}#${CIRCLE_SHA1:0:7}.zip"
+    AWS_CODE_DEPLOY_S3_BUCKET: surveybot-sysadmin-oregan
+database:
+  override:
+    - bundle exec rake db:create db:schema:load db:migrate --trace
+test:
+  override:
+#    - RAILS_ENV=test KNAPSACK_GENERATE_REPORT=true bundle exec rspec -r rspec_junit_formatter --format progress --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml
+    - RAILS_ENV=test bundle exec rake knapsack:rspec:
+        parallel: true
+dependencies:
+  pre:
+    - sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
+    - pip install awsebcli
+    - sudo apt-get update; sudo apt-get install sox libsox-fmt-mp3
+    - sudo apt-get install software-properties-common
+    - sudo add-apt-repository ppa:mc3man/trusty-media -y
+    - sudo apt-get update
+    - sudo apt-get install ffmpeg
+deployment:
+  production:
+    branch: master
+    commands:
+      - bash script/aws-code-deploy.sh
+      - eb use surveybot-prod-env --profile default
+      - eb deploy --profile default:
+          timeout: 1800
 
