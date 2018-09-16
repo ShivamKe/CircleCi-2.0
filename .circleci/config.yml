@@ -3,9 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/ruby:2.4.1
-    branches:
-      only:
-        - testbr
     steps:
       - checkout
       - run: echo "A first hello"
+
