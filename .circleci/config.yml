@@ -89,13 +89,13 @@ jobs:
     # This is based on your 1.0 configuration file or project settings
     - run: 
        name: DB Migration
-       command: bundle exec rake db:create db:schema:load db:migrate --trace
+       command: echo 'bundle exec rake db:create db:schema:load db:migrate --trace' #remove
     # Test
     #   This would typically be a build job when using workflows, possibly combined with build
     # This is based on your 1.0 configuration file or project settings
     - run: 
         name: Test
-        command: RAILS_ENV=test bundle exec rake knapsack:rspec
+        command: echo 'RAILS_ENV=test bundle exec rake knapsack:rspec' #remove
     # Deployment
     # Your existing circle.yml file contains deployment steps.
     # The config translation tool does not support translating deployment steps
