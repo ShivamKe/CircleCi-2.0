@@ -19,7 +19,7 @@ jobs:
       CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
       AWS_CODE_DEPLOY_S3_FILENAME: ${CIRCLE_BUILD_NUM}#${CIRCLE_SHA1:0:7}.zip
       AWS_CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: surveybot-production
-      PATH: ${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/drivers:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
+      PATH: ${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/drivers:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/usr/bin/redis-server
       CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
       AWS_CODE_DEPLOY_REGION: us-west-2
       AWS_CODE_DEPLOY_S3_BUCKET: surveybot-sysadmin-oregan
