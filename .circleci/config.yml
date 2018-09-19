@@ -108,7 +108,7 @@ jobs:
     working_directory: $HOME/surveybot/
     steps:
       - checkout
-      - run: echo  "script/aws-code-deploy.sh" #remove echo
+      - run: ls -l script/aws-code-deploy.sh #remove echo
       - run: echo "eb use surveybot-prod-env --profile default" #remove echo
       - run: echo "eb deploy --profile default:" #remove echo
       
