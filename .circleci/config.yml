@@ -89,13 +89,13 @@ jobs:
     # This is based on your 1.0 configuration file or project settings
     - run: 
        name: DB Migration
-       command: echo 'bundle exec rake db:create db:schema:load db:migrate --trace' #remove
+       command: echo 'bundle exec rake db:create db:schema:load db:migrate --trace' #remove echo
     # Test
     #   This would typically be a build job when using workflows, possibly combined with build
     # This is based on your 1.0 configuration file or project settings
     - run: 
         name: Test
-        command: echo 'RAILS_ENV=test bundle exec rake knapsack:rspec' #remove
+        command: echo 'RAILS_ENV=test bundle exec rake knapsack:rspec' #remove echo
     # Deployment
     # Your existing circle.yml file contains deployment steps.
     # The config translation tool does not support translating deployment steps
@@ -108,9 +108,9 @@ jobs:
     working_directory: $HOME/surveybot/
     steps:
       - checkout
-      - run: echo  "script/aws-code-deploy.sh"
-      - run: echo "eb use surveybot-prod-env --profile default"
-      - run: echo "eb deploy --profile default:"
+      - run: echo  "script/aws-code-deploy.sh" #remove echo
+      - run: echo "eb use surveybot-prod-env --profile default" #remove echo
+      - run: echo "eb deploy --profile default:" #remove echo
       
 workflows:
   version: 2
