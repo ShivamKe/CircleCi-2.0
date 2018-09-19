@@ -76,7 +76,7 @@ jobs:
     - run: sudo apt-get install software-properties-common
     - run: sudo add-apt-repository ppa:mc3man/trusty-media -y
     - run: sudo apt-get update
-    - run: sudo apt-get install ffmpeg
+    #- run: sudo apt-get install ffmpeg
     # Save dependency cache
     #- save_cache:
     #    key: v1-dep-{{ .Branch }}-{{ epoch }}
@@ -108,7 +108,8 @@ jobs:
     working_directory: $HOME/surveybot/
     steps:
       - checkout
-      - run: ls -l script/aws-code-deploy.sh #remove echo
+      - run: "pwd; ls -l"
+      - run: echo "script/aws-code-deploy.sh #remove echo
       - run: echo "eb use surveybot-prod-env --profile default" #remove echo
       - run: echo "eb deploy --profile default:" #remove echo
       
